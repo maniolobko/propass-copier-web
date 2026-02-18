@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Mail, Lock, Loader } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { API_CONFIG } from '../config'
-import { useAuthStore } from '../store/authStore'
 
 interface LoginPageProps {
   onLoginSuccess: () => void
@@ -12,7 +11,6 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const { login } = useAuthStore()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -31,7 +29,7 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: email,
+          username: email, // Accept both email and username
           password,
         }),
       })
@@ -44,11 +42,13 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
       }
 
       if (data.success && data.token && data.user) {
-        login(data.token, {
+        // Store auth data in localStorage
+        localStorage.setItem('auth_token', data.token)
+        localStorage.setItem('auth_user', JSON.stringify({
           id: data.user.id,
           email: data.user.email || email,
           role: data.user.role,
-        })
+        }))
         toast.success('Connexion réussie!')
         onLoginSuccess()
       } else {
@@ -84,16 +84,16 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
             {/* Email Input */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Adresse email
+                Identifiant (email ou nom d'utilisateur)
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
                 <input
                   id="email"
-                  type="email"
+                  type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="client@rfid.local"
+                  placeholder="client ou client@rfid.local"
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                   disabled={isLoading}
                 />
@@ -141,7 +141,9 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
             <p className="text-sm text-blue-700">
               <strong>Identifiants de démonstration :</strong>
               <br />
-              Email: <code className="bg-white px-2 py-1 rounded text-blue-600 font-mono">client@rfid.local</code>
+              Identifiant: <code className="bg-white px-2 py-1 rounded text-blue-600 font-mono">client</code>
+              <br />
+              Mot de passe: <code className="bg-white px-2 py-1 rounded text-blue-600 font-mono">Paris2026</code>
             </p>
           </div>
         </div>
