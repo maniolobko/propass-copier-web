@@ -1,16 +1,43 @@
 import { Badge, Wifi, LogOut } from 'lucide-react'
+import { useAuthStore } from '../store/authStore'
 import type { Page } from '../types'
 
 interface SidebarProps {
   currentPage: Page
   onNavigate: (page: Page) => void
+  onLogout?: () => void
 }
 
-export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
-  const user = {
-    name: 'client1',
-    role: 'Client',
-    email: 'client@rfid.local',
+export default function Sidebar({ currentPage, onNavigate, onLogout }: SidebarProps) {
+  const user = (() => {
+    const storedUser = localStorage.getItem('auth_user')
+    if (storedUser) {
+      try {
+        const parsed = JSON.parse(storedUser)
+        return {
+          name: parsed.email?.split('@')[0] || 'Utilisateur',
+          role: parsed.role || 'Client',
+          email: parsed.email || 'client@rfid.local',
+        }
+      } catch {
+        return {
+          name: 'Utilisateur',
+          role: 'Client',
+          email: 'client@rfid.local',
+        }
+      }
+    }
+    return {
+      name: 'Utilisateur',
+      role: 'Client',
+      email: 'client@rfid.local',
+    }
+  })()
+
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout()
+    }
   }
 
   return (
@@ -84,6 +111,7 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
       {/* Logout */}
       <div className="p-4 border-t border-gray-200">
         <button
+          onClick={handleLogout}
           className="w-full flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors font-medium text-sm"
           title="Se déconnecter"
           aria-label="Se déconnecter"
