@@ -1,0 +1,32 @@
+{
+  "name": "propass-copier-web",
+  "version": "1.0.0",
+  "description": "Application web PROPASS pour the copie de badges RFID",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext ts,tsx",
+    "deploy": "npm run build && vercel --prod",
+    "deploy:preview": "npm run build && vercel"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
+    "lucide-react": "^0.263.1",
+    "date-fns": "^2.30.0",
+    "recharts": "^2.10.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.4",
+    "vite": "^4.4.9",
+    "typescript": "^5.1.6",
+    "tailwindcss": "^3.3.2",
+    "postcss": "^8.4.27",
+    "autoprefixer": "^10.4.14"
+  }
+}
