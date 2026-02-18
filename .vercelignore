@@ -1,5 +1,6 @@
-node_modules/
-dist/
+node_modules
+.git
+dist
 .env
 .env.local
 .DS_Store
@@ -10,4 +11,5 @@ yarn-error.log*
 .vite/
 .idea/
 .vscode/settings.json
-.vercel
+coverage/
+.turbo/
