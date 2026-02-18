@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Sidebar from './components/Sidebar'
 import Dashboard from './pages/Dashboard'
 import CopyBadge from './pages/CopyBadge'
+import ReloadPage from './pages/ReloadPage'
 import LoginPage from './pages/LoginPage'
 import { useAuthStore } from './store/authStore'
 import type { Page } from './types'
@@ -55,6 +56,7 @@ function App() {
       <main className="flex-1 overflow-auto">
         {currentPage === 'home' && <Dashboard onNavigateToCopy={() => setCurrentPage('copy')} />}
         {currentPage === 'copy' && <CopyBadge />}
+        {currentPage === 'reload' && <ReloadPage />}
       </main>
     </div>
   )

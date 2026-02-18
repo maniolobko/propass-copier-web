@@ -1,4 +1,4 @@
-export type Page = 'home' | 'copy'
+export type Page = 'home' | 'copy' | 'reload'
 
 export interface User {
   name: string

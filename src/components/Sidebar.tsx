@@ -1,4 +1,4 @@
-import { Badge, Wifi, LogOut } from 'lucide-react'
+import { Badge, Wifi, LogOut, CreditCard } from 'lucide-react'
 import { useAuthStore } from '../store/authStore'
 import type { Page } from '../types'
 
@@ -104,6 +104,19 @@ export default function Sidebar({ currentPage, onNavigate, onLogout }: SidebarPr
             aria-label="Copier un badge"
           >
             Copier un badge
+          </button>
+          <button
+            onClick={() => onNavigate('reload')}
+            className={`w-full text-left px-4 py-3 rounded-lg font-medium transition-colors flex items-center gap-2 ${
+              currentPage === 'reload'
+                ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600'
+                : 'text-gray-700 hover:bg-gray-50'
+            }`}
+            title="Recharger un badge"
+            aria-label="Recharger un badge"
+          >
+            <CreditCard className="w-4 h-4" />
+            Recharger
           </button>
         </div>
       </nav>
